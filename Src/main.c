@@ -18,19 +18,21 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "dac.h"
 #include "dma.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define Length 100
+#define Length 100  //正弦表中元素个数
 
 /* USER CODE END PTD */
 
@@ -49,7 +51,11 @@ const uint16_t Sintable[Length]=
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+__IO uint8_t AdcConvEnd = 0;  //�?测ADC是否采集完毕
+uint32_t Idx;   //定义sin_table中的下标变量
+uint16_t DualSineal[Length];    //定义DAC数据缓冲�?????
+uint16_t ADC_Value[1000+2]; //储存ADC采集的数�????
+double ADC_Vol;   //AD采集的真实�??
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,8 +76,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  uint32_t Idx;   //定义sin_table中的下标变量
-  uint16_t DualSineal[Length];    //定义DAC数据缓冲区
+  uint16_t X=0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -95,14 +100,34 @@ int main(void)
   MX_DMA_Init();
   MX_DAC_Init();
   MX_TIM2_Init();
+  MX_ADC1_Init();
+  MX_TIM3_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  /* 读取正弦波数据 */
+  /* 用于测试程序是否死机 */
+  HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
+  HAL_Delay(500);
+  HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
+  HAL_Delay(500);
+  /* 读取正弦波数�????? */
   for(Idx=0;Idx<100;Idx++){
     DualSineal[Idx] = (Sintable[Idx] << 16) + Sintable[Idx];
   }
   HAL_TIM_Base_Start(&htim2);
   HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t *)DualSineal, Length, DAC_ALIGN_12B_R);
-  /* USER CODE END 2 */
+  HAL_TIM_Base_Start(&htim3);
+  HAL_Delay(100);   //等待AD转换结束
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADC_Value, 1000+2); 
+  while(!AdcConvEnd);		//等待AD采集完成
+	for(X=0;X<1000;X++){
+		/* 三次移动平均 */
+		for(uint8_t i=0;i<3;i++){
+			ADC_Vol+=ADC_Value[X+i];
+		}
+    ADC_Vol = (double)ADC_Vol*3.3/4095/3;
+    printf("%.4f\n",ADC_Vol);	  //用于serialchart波形串口调试          //这一句会让程序死机！！！！！！！！
+    }
+  // /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -111,6 +136,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    /* 用于测试程序是否死机 */
+      HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
+      HAL_Delay(500);
+      HAL_GPIO_TogglePin(led0_GPIO_Port, led0_Pin);
+      HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }
