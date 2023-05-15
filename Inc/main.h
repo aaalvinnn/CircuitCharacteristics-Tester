@@ -59,6 +59,12 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define AD9833_CS_Pin GPIO_PIN_11
 #define AD9833_CS_GPIO_Port GPIOB
+#define MCP41010_CS_Pin GPIO_PIN_6
+#define MCP41010_CS_GPIO_Port GPIOG
+#define MCP41010_SCK_Pin GPIO_PIN_7
+#define MCP41010_SCK_GPIO_Port GPIOG
+#define MCP41010_DATA_Pin GPIO_PIN_8
+#define MCP41010_DATA_GPIO_Port GPIOG
 #define AD9833_FSYNC_Pin GPIO_PIN_6
 #define AD9833_FSYNC_GPIO_Port GPIOC
 #define AD9833_CSC7_Pin GPIO_PIN_7

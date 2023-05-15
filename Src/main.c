@@ -29,6 +29,7 @@
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
 #include "ad9833.h"
+#include "mcp41010.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
