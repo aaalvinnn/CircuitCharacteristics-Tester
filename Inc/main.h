@@ -57,6 +57,16 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define AD9833_CS_Pin GPIO_PIN_11
+#define AD9833_CS_GPIO_Port GPIOB
+#define AD9833_FSYNC_Pin GPIO_PIN_6
+#define AD9833_FSYNC_GPIO_Port GPIOC
+#define AD9833_CSC7_Pin GPIO_PIN_7
+#define AD9833_CSC7_GPIO_Port GPIOC
+#define AD9833_SCK_Pin GPIO_PIN_8
+#define AD9833_SCK_GPIO_Port GPIOC
+#define AD9833_DATA_Pin GPIO_PIN_9
+#define AD9833_DATA_GPIO_Port GPIOC
 #define led0_Pin GPIO_PIN_13
 #define led0_GPIO_Port GPIOG
 #define led1_Pin GPIO_PIN_14
