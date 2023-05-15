@@ -11,7 +11,7 @@
 
 // ------------------------- Defines -------------------------
 #define FMCLK 25000000        // Master Clock On AD9833
-#define AD9833PORT GPIOA      // PORT OF AD9833
+#define AD9833PORT GPIOC      // PORT OF AD9833
 #define AD9833DATA GPIO_PIN_9 // SPI DATA PIN
 #define AD9833SCK GPIO_PIN_8  // SPI Clock PIN
 #define AD9833SS GPIO_PIN_7   // SPI Chip Select
