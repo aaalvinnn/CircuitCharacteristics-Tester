@@ -191,6 +191,39 @@ void SystemClock_Config(void)
 //     }
 //   }
 // }
+
+/* 峰峰值计算
+ * value: 采样原始序列;
+ * length：序列长度;
+ * return一个16位的整数
+ * （无法应对极值噪声的情况）
+ */
+uint16_t getsVpp(uint16_t* value, uint16_t length){
+  uint16_t vmax = value[0];
+  uint16_t vmin = value[0];
+  uint8_t i = 0;
+  /* 计算极值 */
+  for(i=0;i<length-1;i++){
+    if(vmax < value[i+1]) vmax = value[i+1];
+    if(vmin > value[i+1]) vmin = value[i+1];
+  }
+  /* 计算峰峰值 */
+  return (vmax-vmin);
+}
+
+
+/* 中频幅频响应 */
+float AmpGain(uint16_t* Vin, uint16_t* Vout, uint16_t length){
+  float amp = (float)getsVpp(Vout, length) / getsVpp(Vin, length);
+  return amp;
+}
+
+/* 输入电阻计算 */
+
+/* 输出电阻计算 */
+
+/* 幅频响应 */
+
 /* USER CODE END 4 */
 
 /**
