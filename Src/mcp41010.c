@@ -29,6 +29,7 @@ void MCP41010_SPI_SendOneByte(uint8_t xtemp){
 		HAL_GPIO_WritePin(MCP41010_PORT, MCP41010_SCK, GPIO_PIN_RESET);	
 		xtemp = xtemp << 1;
 	}
+	HAL_GPIO_WritePin(MCP41010_PORT, MCP41010_CS, GPIO_PIN_SET);	//拉高片选，停止发送
 }
 
 //设置MCP41010的滑动变阻器抽头位置
@@ -38,27 +39,19 @@ void MCP41010_SPI_SendOneByte(uint8_t xtemp){
 //注：对于10KΩ的器件来说，LSB为39.0625Ω
 //注：每次芯片上电后，抽头寄存器的值为0x80，约为5KΩ
 void MCP41010_SetRes(uint8_t xRes){
-
-	//MCP41010芯片使能，拉低片选
-	HAL_GPIO_WritePin(MCP41010_PORT, MCP41010_CS, GPIO_PIN_RESET);
-	
-	
 	//发送第一字节，控制方式位
 	//0x13。写数据，对电位器0，1操作
 	MCP41010_SPI_SendOneByte(0x13);
 	
 	//发送第二字节，滑动变阻器抽头位
 	MCP41010_SPI_SendOneByte(xRes);
-	
-	//MCP41010芯片失能
-	HAL_GPIO_WritePin(MCP41010_PORT, MCP41010_CS, GPIO_PIN_RESET);
 }
 
 /* 开启MCP41010 */
 void MCP41010_Init(uint8_t xRes){
+	HAL_GPIO_WritePin(MCP41010_PORT,MCP41010_CS,GPIO_PIN_SET);   // Set All SPI pings to High
 	HAL_GPIO_WritePin(MCP41010_PORT,MCP41010_DATA,GPIO_PIN_SET); // Set All SPI pings to High
 	HAL_GPIO_WritePin(MCP41010_PORT,MCP41010_SCK,GPIO_PIN_SET);  // Set All SPI pings to High
-	HAL_GPIO_WritePin(MCP41010_PORT,MCP41010_CS,GPIO_PIN_SET);   // Set All SPI pings to High
 	MCP41010_SetRes(xRes);	//设置电阻值
 	return ;
 }

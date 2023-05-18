@@ -49,17 +49,12 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOG_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(AD9833_CS_GPIO_Port, AD9833_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, MCP41010_CS_Pin|MCP41010_SCK_Pin|MCP41010_DATA_Pin|led0_Pin
-                          |led1_Pin|led2_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, AD9833_FSYNC_Pin|AD9833_CSC7_Pin|AD9833_SCK_Pin|AD9833_DATA_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, AD9833_FSYNC_Pin|MCP41010_CS_Pin|SCLK_Pin|DATA_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = AD9833_CS_Pin;
@@ -68,17 +63,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(AD9833_CS_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PGPin PGPin PGPin PGPin
-                           PGPin PGPin */
-  GPIO_InitStruct.Pin = MCP41010_CS_Pin|MCP41010_SCK_Pin|MCP41010_DATA_Pin|led0_Pin
-                          |led1_Pin|led2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
   /*Configure GPIO pins : PCPin PCPin PCPin PCPin */
-  GPIO_InitStruct.Pin = AD9833_FSYNC_Pin|AD9833_CSC7_Pin|AD9833_SCK_Pin|AD9833_DATA_Pin;
+  GPIO_InitStruct.Pin = AD9833_FSYNC_Pin|MCP41010_CS_Pin|SCLK_Pin|DATA_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

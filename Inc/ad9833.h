@@ -14,8 +14,7 @@
 #define AD9833PORT GPIOC      // PORT OF AD9833
 #define AD9833DATA GPIO_PIN_9 // SPI DATA PIN
 #define AD9833SCK GPIO_PIN_8  // SPI Clock PIN
-#define AD9833SS GPIO_PIN_7   // SPI Chip Select
-#define AD9833FSYNC GPIO_PIN_6   // AD9833 FSYNC
+#define AD9833FSYNC GPIO_PIN_6   // AD9833 FSYNC (just like CS)
 
 enum WaveType{SIN, SQR, TRI}; // Wave Selection Enum
 

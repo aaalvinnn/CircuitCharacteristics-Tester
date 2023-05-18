@@ -59,26 +59,14 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define AD9833_CS_Pin GPIO_PIN_11
 #define AD9833_CS_GPIO_Port GPIOB
-#define MCP41010_CS_Pin GPIO_PIN_6
-#define MCP41010_CS_GPIO_Port GPIOG
-#define MCP41010_SCK_Pin GPIO_PIN_7
-#define MCP41010_SCK_GPIO_Port GPIOG
-#define MCP41010_DATA_Pin GPIO_PIN_8
-#define MCP41010_DATA_GPIO_Port GPIOG
 #define AD9833_FSYNC_Pin GPIO_PIN_6
 #define AD9833_FSYNC_GPIO_Port GPIOC
-#define AD9833_CSC7_Pin GPIO_PIN_7
-#define AD9833_CSC7_GPIO_Port GPIOC
-#define AD9833_SCK_Pin GPIO_PIN_8
-#define AD9833_SCK_GPIO_Port GPIOC
-#define AD9833_DATA_Pin GPIO_PIN_9
-#define AD9833_DATA_GPIO_Port GPIOC
-#define led0_Pin GPIO_PIN_13
-#define led0_GPIO_Port GPIOG
-#define led1_Pin GPIO_PIN_14
-#define led1_GPIO_Port GPIOG
-#define led2_Pin GPIO_PIN_15
-#define led2_GPIO_Port GPIOG
+#define MCP41010_CS_Pin GPIO_PIN_7
+#define MCP41010_CS_GPIO_Port GPIOC
+#define SCLK_Pin GPIO_PIN_8
+#define SCLK_GPIO_Port GPIOC
+#define DATA_Pin GPIO_PIN_9
+#define DATA_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 
